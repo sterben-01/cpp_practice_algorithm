@@ -10,20 +10,44 @@
 #include <memory>
 using namespace std;
 
+vector<int> a;
+void test(const int& obj){
+    a.push_back(obj);
+
+}
+
+class myclass{
+    public:
+        int val;
+        vector<myclass> myvec;
+        myclass(){};
+        myclass(int a):val(a){myvec.reserve(10);}
+        void addval(myclass obj){
+            myvec.push_back(obj);
+        }
+        myclass(const myclass& obj){
+            cout << "copy const" << endl;
+        }
+        // myclass(const myclass&& obj) noexcept{
+        //     cout << "move const" << endl;
+        // }
+
+};
 
 
 
 int main()
 {
-    vector<int>t1 = {1,2,2,3,4,5};
-    t1.erase(t1.begin() + 1);
-    //remove(t1.begin(), t1.end(), 2);
-    cout << t1.size() <<endl;
-    cout << t1.capacity() << endl;
-    t1 = vector<int>(t1);
-    vector<int>(t1).swap(t1);
-    cout << t1.size() <<endl;
-    cout << t1.capacity() << endl;  
+    myclass a(3);
+    myclass b(8);
+    a.addval(b);
+    cout << "-----" << endl;
+    a.addval(myclass(5));
+//     cout << a.myvec.size() << endl;
+//     cout << a.myvec.capacity() << endl;
+//     a.addval(myclass(6));
+//     cout << a.myvec.size() << endl;
+//     cout << a.myvec.capacity() << endl;
 }
 /*
 实例化函数模板时, 模板实参必须是已知的, 但不必显式指定. 

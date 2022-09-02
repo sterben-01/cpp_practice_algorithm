@@ -17,25 +17,28 @@ class test{
     int test_val1;
     int test_val2;
     public:
-    test(int x, int y):test_val1(x), test_val2(y){};
     struct obj{
         int _objval;
         int _faf;
         obj(){}
         obj(int x): _objval(x){}
     };
+    obj myobj;
+    test(int x, int y):test_val1(x),test_val2(y){
+        myobj._objval = 5;
+    };
     obj inclass_obj1; //obj对象使用无参构造函数
     obj inclass_obj2(); //这是返回obj类型的函数
-    obj inclass_obj3(5); //这里表面是使用了obj的有参构造，但是不允许这种行为。因为有二义性。编译器认为这是个返回obj类型的形参为5的函数。但是形参为5是啥玩意？所以一个类内不允许使用圆括号初始化另一个类。
+    //obj inclass_obj3(5); //这里表面是使用了obj的有参构造，但是不允许这种行为。因为有二义性。编译器认为这是个返回obj类型的形参为5的函数。但是形参为5是啥玩意？所以一个类内不允许使用圆括号初始化另一个类。
     //也就是不允许使用直接初始化
     //举个例子：
     int a = 5; //拷贝初始化 OK
-    int b(5); //直接初始化。ERROR。
+    //int b(5); //直接初始化。ERROR。
     //替代方案：
-    obj inclass_obj4 = {test_val1}; // 列表初始化 OK //* 注意这里使用了类的有参构造函数。没有使用拷贝构造  //!注意这不是聚合初始化。聚合初始化不能有用户定义的构造函数
+    //obj inclass_obj4 = {test_val1}; // 列表初始化 OK //* 注意这里使用了类的有参构造函数。没有使用拷贝构造  //!注意这不是聚合初始化。聚合初始化不能有用户定义的构造函数
     obj inclass_obj5{test_val2}; //列表初始化 OK //* 注意这里使用了类的有参构造函数。没有使用拷贝构造 //!注意这不是聚合初始化。聚合初始化不能有用户定义的构造函数
-    obj inclass_obj6 = 5; //该处的初始化方式是隐式调用obj(int)构造函数生成一个临时的匿名对象，再调用拷贝构造函数完成初始化。
-    obj inclass_obj7 = obj(5); //显式调用有参构造函数生成一个临时的匿名对象，再调用拷贝构造函数完成初始化 OK
+    // obj inclass_obj6 = 5; //该处的初始化方式是隐式调用obj(int)构造函数生成一个临时的匿名对象，再调用拷贝构造函数完成初始化。
+    // obj inclass_obj7 = obj(5); //显式调用有参构造函数生成一个临时的匿名对象，再调用拷贝构造函数完成初始化 OK
 
 };
 
@@ -73,14 +76,3 @@ class test1{
 //     typename T::obj* ptr = &t.s;
 //     cout << ptr->_sb << endl;
 // } 
-
-int main(){
-    //A a;
-    //cout << a.b->_bval << endl;
-    test t(5,10);
-    cout << t.inclass_obj6._objval << endl;
-    //func<test>();
-    //cout << t.inclassobj._objval << endl;
-    return 0;
-
-}
