@@ -9,6 +9,7 @@ using namespace std;
 岛屿周长和岛屿面积的核心差不多。不过需要注意几点
 第一点是，如果下一个方块出界了或者是进入海里了，就返回1。因为对应了一条边。
 &一个方块有四条边，向上向下向左向右走各对应一条边。
+!因为恰好只有一个岛屿，所以只需要找到第一个1走一圈即可。
 第二点是area函数return不需要+1。因为岛屿面积我们是有当前岛屿面积的也就是1。但是周长没有当前周长所以不需要+1。
 */
 
@@ -22,8 +23,7 @@ public:
         for(int i = 0; i < grid.size(); i++){
             for(int j = 0; j < grid[0].size(); j++){
                 if(grid[i][j] == 1){
-                    int temp = area(grid, i, j);
-                    ret = ret >= temp ? ret : temp;
+                    ret = area(grid, i, j);
                 }
             }
         }

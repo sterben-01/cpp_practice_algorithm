@@ -24,7 +24,7 @@ using namespace std;
     |   |           |   |
     |   |   |   |   |   |
     |   |   |   |   |   |
-0   1   2   3   4   5   6
+  0   1   2   3   4   5   6
 ----------------------
 */
 
@@ -43,7 +43,7 @@ public:
                 stk.push(i);
             }
             else{
-                while(stk.empty() == false && height[stk.top()] < height[i]){ //要用while循环。因为只要当前新要加的墙比栈顶的墙高，就证明还能接水。
+                while(stk.empty() == false && height[stk.top()] < height[i]){ //要用while循环。因为只要当前新要加的墙比栈顶的墙高，就证明还能计算。
                 //所以要一直计算到栈空了（两个墙挨着了）或者是当前新要加的墙比栈顶的墙矮了（可以继续接水了）
                     int mid = stk.top(); //计算当前栈顶（凹槽）的下标
                     stk.pop();          //去掉凹槽，这时候栈顶剩下的是左边的墙的下标

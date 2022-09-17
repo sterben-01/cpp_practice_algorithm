@@ -10,6 +10,9 @@ using namespace std;
 
 /*
 核心是遍历四叉树
+&这题注意理解性错误。我们DFS里面的返回值其实一点意义都没有。我们这个题的核心目的是：把遍历过的1连起来的区域给换成别的数字而已。然后找有几个是1的起点。
+&所以这个题目的核心是从1开始找，把所有1的地方换成2。然后直到没有地方可以走了，我们就退出来。把结果+1。因为找到了一个岛屿。然后看看有没有下一个是1的地方，从那个地方继续走。
+&所以我们也可以换成另一种方式写。注释掉的部分就是
 
 */
 class Solution {
@@ -29,7 +32,36 @@ public:
         return count;
     }
 
+/*
+int numIslands(vector<vector<char>>& grid) {
+    int count = 0;
+    for(int i = 0; i < grid.size(); i++){
+        for(int j = 0; j < grid[0].size(); j++){
+            if(grid[i][j] == '1'){ //!注意这里。我们可以从1开始走。就不需要判断dfs返回值。
+                area(grid, i, j);
+                count++;
+            }
+        }
+    }
+    return count;
+}
 
+void area(vector<vector<char>>& grid, int col, int row){ //!不需要返回值
+    if(!is_valid(grid, col, row)){
+        return;
+    }
+    if(grid[col][row] != '1'){
+        return;
+    }
+    grid[col][row] = '2';
+    area(grid, col+1, row);
+    area(grid, col, row+1);
+    area(grid, col-1, row);
+    area(grid, col, row-1);
+    return;
+
+}
+*/
 
 
     bool area(vector<vector<char>>& grid, int row, int col){

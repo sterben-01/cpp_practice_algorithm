@@ -69,7 +69,6 @@ int triverse(vector<vector<int>>& grid) {
     }
     grid[0][0] = -1;
     while (!my_deque.empty()) {
-
         vector<int> temp = my_deque.front();
         my_deque.pop_front();
         if (grid[temp[0]][temp[1]] == 9) {

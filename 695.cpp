@@ -6,17 +6,16 @@ using namespace std;
 /*
 岛屿问题理解为递归DFS遍历四叉树即可。每个格子的前进就是上下左右四种。唯一区别就是遍历过的需要设置为2避免递归时重复遍历。
 
-理论上因为需要在area函数修改grid的数据。但是不知道修改原grid会不会出问题。所以复制了一次这样每一次新格子调用area函数的时候用的都是原始数组。
+岛屿问题核心就是DFS遍历。遍历过的位置标记为2， 不需要重复遍历。所以直接修改原grid没有问题。
 */
 class Solution {
 public:
     int maxAreaOfIsland(vector<vector<int>>& grid) {
-        vector<vector<int>> tt = grid;
         int ret = 0;
         for(int i = 0; i < grid.size(); i++){
             for(int j = 0; j < grid[0].size(); j++){
                 if(grid[i][j] == 1){
-                    int temp = area(tt, i, j);
+                    int temp = area(grid, i, j);
                     ret = (ret >= temp) ? ret : temp;
                 }
             }
