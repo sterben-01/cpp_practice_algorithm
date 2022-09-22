@@ -12,7 +12,7 @@
 text 这题很类似于岛屿题，但是我们要换一个思路
 我们的思路是
 &所有的不和四周相邻的区域的O都可以被换成X。也就是说这个O只要不在边上，也不和边上的O挨着，就都换成X。
-&那我们逆向思考，把所有边上的O和 和边上O连着的O换成一个字符，然后把剩下所有的O都换成X，再把所有的字符换成O就完了呗
+&那我们逆向思考，把所有边上的O和 和边上O连着的O标记为P，然后把所有的O都换成X，再把所有的P换成O就完了。
 !说白了就是找到和四周的O相连的区域。
 %所以很简单。
 &还是有一个valid函数，不过我们这个函数只负责检查是否越界。 
@@ -39,7 +39,7 @@ public:
                 if(board[i][j] == 'O'){
                     board[i][j] = 'X';
                 }
-                if(board[i][j] == 'P'){
+                if(board[i][j] == 'P'){ //注意这里俩if不能倒过来写。
                     board[i][j] = 'O';
                 }
             }
@@ -54,7 +54,7 @@ public:
         if(board[col][row] == 'X' || board[col][row] == 'P' ){
             return;
         }
-        if(board[col][row] == 'O'){
+        if(board[col][row] == 'O'){ //这个if可以不要
             
             board[col][row] = 'P';
             triverse(board, col, row+1);
