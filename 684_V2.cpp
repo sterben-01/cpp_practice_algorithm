@@ -22,7 +22,7 @@ text 此为并查集通用模板
 这样我们查找3的溯源节点就会查找两次，直到查找到2的溯源节点是2自己为止。
 这样由于树的深度过大，所以耗费时间
 所以路径压缩说白了就是，不用再次每次都查找了。直接把father数组从储存自己的父节点变成储存自己的溯源节点。
-也就是father[3] = 4, father[4] = 2 然后最终应用为father[3] = 2。
+也就是father[3] = 4, father[4] = 2 然后最终应为father[3] = 2。
 &按秩合并
 按秩合并的意思就是，如果1为根节点的树是1 2 3，深度为3。4为根节点的树是4 5 6 7 8，深度为5。
 如果这个时候出现一个路径[1,4]，就需要把节点1的溯源节点设置为4，避免树的深度增加。
@@ -32,7 +32,7 @@ text 此为并查集通用模板
 class findunion{
     public:
         vector<int> father; //储存节点
-        vector<int> ret;
+        vector<int> ret; //&此题特有变量
         vector<int> rank; //可以理解为储存的是这个节点距离子节点的深度。按秩合并。
         findunion(int x): father(vector<int>(x)), rank(vector<int>(x)){
             //初始化数组。每个节点一开始的父节点和溯源节点都是自己。
@@ -56,7 +56,7 @@ class findunion{
                 ret.push_back(x);
                 ret.push_back(y);
             }
-            if(rootx != rooty){//&这个部分根据题意来可以增加辅助变量。不相等证明不存在环路，可以新增链接，实施按秩合并。
+            if(rootx != rooty){//&这个部分根据题意来可以增加辅助变量。不相等证明两个节点不属于一个溯源节点，不存在环路，可以新增链接，实施按秩合并。
                 if(rank[rootx] < rank[rooty]){ //把深度小的树的溯源节点设置为深度大的树的溯源节点
                     father[rootx] = rooty;
                 }
