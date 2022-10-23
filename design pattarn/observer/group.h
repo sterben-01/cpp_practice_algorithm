@@ -9,7 +9,7 @@
 #include <unordered_set>
 using namespace std;
 
-class Observer; //注意这里我们使用了前向声明。所以我们这个文件没有include observer.h这个文件，因为我们只是在定义，并且只使用了指针或引用。并没有访问这个类的对象。
+class Observer; //&注意这里我们使用了前向声明。所以我们这个文件没有include observer.h这个文件，因为我们只是在定义，并且只使用了指针或引用。并没有访问这个类的对象。
 class Player;
 
 

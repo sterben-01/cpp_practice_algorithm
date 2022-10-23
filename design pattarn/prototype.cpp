@@ -23,12 +23,12 @@ class WorkModel{
 };
 
 //CLASS - 抽象原型类。
-class ConcreteWork; //&前向声明整一下子。这块设计有点问题，看个大概意思就行。
 class PrototypeWork{
     public:
         PrototypeWork(){};
         virtual ~PrototypeWork(){};
-        virtual shared_ptr<ConcreteWork> clone(const string& iname, int id, const string& modelname) = 0; //&实现一个克隆接口。
+        virtual shared_ptr<PrototypeWork> clone(const string& iname, int id, const string& modelname) = 0; //&实现一个克隆接口。
+        virtual void printInfo() = 0;
 
 };
 //CLASS - 具体原型类。这里是一个作业。包含作业内容。
@@ -40,14 +40,14 @@ class ConcreteWork: public PrototypeWork{
             workModel->setWorkModelName(modelname);//&写作业。
         }
 
-        shared_ptr<ConcreteWork> clone(const string& iname, int id, const string& modelname){ //&克隆。
+        shared_ptr<PrototypeWork> clone(const string& iname, int id, const string& modelname){ //&克隆。
             shared_ptr<ConcreteWork> copiedWork = make_shared<ConcreteWork>(); //&这里我们要深拷贝，也就是新创建一份作业。毕竟俩人不能交同一份作业
             copiedWork->setName(iname);//&写名字
             copiedWork->setID(id);//&写学号
             copiedWork->setModel(this->workModel);//&抄作业内容。
             copiedWork->workModel->setWorkModelName(modelname);//&作业抄完了，更改作业内容因人而异的部分。
-            return copiedWork;
-            //return dynamic_pointer_cast<PrototypeWork>(copiedWork);
+            //return copiedWork;
+            return dynamic_pointer_cast<PrototypeWork>(copiedWork); //&智能指针的动态类型转换。
         }
 
         void setName(const string& name){
@@ -79,9 +79,9 @@ class ConcreteWork: public PrototypeWork{
 //CLASS - 客户端类。这里就是main
 
 int main(){
-    shared_ptr<ConcreteWork> myWork = make_shared<ConcreteWork>("Sky", 01, "Sky's HW1"); //&我的作业
+    shared_ptr<PrototypeWork> myWork = make_shared<ConcreteWork>("Sky", 01, "Sky's HW1"); //&我的作业
     cout <<"作业1" << endl;
-    shared_ptr<ConcreteWork> hisWork = myWork->clone("Lucy", 831, "Lucy's HW1"); //&有人抄了我的作业
+    shared_ptr<PrototypeWork> hisWork = myWork->clone("Lucy", 831, "Lucy's HW1"); //&有人抄了我的作业
     cout <<"有人抄作业" << endl;
     cout <<"作业抄完记得更改姓名和学号" <<endl;
 

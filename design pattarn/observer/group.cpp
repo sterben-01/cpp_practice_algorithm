@@ -1,5 +1,5 @@
 #include "group.h"
-#include "observer.h" //这里我们使用了observer文件内也就是player类指针指向的对象，也就是有访问，那么就必须要包含observer这个文件了。
+#include "observer.h" //&这里我们使用了observer文件内也就是player类指针指向的对象，也就是有访问，那么就必须要包含observer这个文件了。
 
 
 void Group::join(shared_ptr<Player> player){
@@ -30,12 +30,12 @@ void Group::get_playerList(){
 
 
 void GroupController::notify(INFO_TYPE infoType, const string& name){
-    //通知其他观察者。
+    //&通知其他观察者。
     switch (infoType)
     {
     case RECOURCE:
         for (const auto& ober: playerList){
-            //在容器内遍历所有的观察者，调用观察者的行为。这里观察者的行为就是所谓的update。
+            //&在容器内遍历所有的观察者，调用观察者的行为。这里观察者的行为就是所谓的update。
             if(ober->getName() != name){ //自己不用通知自己了。
                 ober->come();
             }

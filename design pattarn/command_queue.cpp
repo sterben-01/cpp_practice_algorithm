@@ -219,6 +219,7 @@ cout <<"------------------------------------------------------执行分割------
 
     shared_ptr<CommandQueue> cmdQueue = make_shared<CommandQueue>(); //命令队列类。
 
+    //& 向命令队列添加命令。
     cmdQueue->addCommand(fanCmd2);
     cmdQueue->addCommand(fanCmd2);
     cmdQueue->addCommand(fanCmd2);
@@ -227,8 +228,8 @@ cout <<"------------------------------------------------------执行分割------
     cmdQueue->addCommand(lampCmd2);
     cmdQueue->addCommand(lampCmd2);
 
-    button2->setCommandQueue(cmdQueue);
-    button2->touch();
+    button2->setCommandQueue(cmdQueue); //&注入命令队列至调用者
+    button2->touch(); //&调用者执行。
 
 
 
