@@ -6,8 +6,10 @@
 using namespace std;
 /*
 text 单词搜索 经典DFS+回溯
-&要点注意！我们每一个主函数的循环都是一次更改board。所以需要每次把board赋值回去。这样就是一个新的board了
-&其次，这个valie和DFS函数必须引用传参，否则超时。由于是引用传参，所以需要回溯。标记了*的需要记录原来的值，然后再最后面return之前赋值回去。
+&要点注意！，这个valie和DFS函数必须引用传参，否则超时。由于是引用传参，所以需要回溯。标记了*的需要记录原来的值，然后再最后面return之前赋值回去。
+&必须赋值回去的原因是如果顺着一条路，走到某个地方后整条路标记为*了最后发现不行，那么我们回去之后走过的地方依旧还是*则会被堵死。
+经典的例子就是假设在i处同时可以向下或者向左走，然后先向下走，绕了一圈后走到i的左边了然后接着走。此时i的下面和左边都是* 结果发现此路不通，然后回到i。
+此时由于左侧已经被标记为*了就被误判为左边已经走过了。所以会出问题、
 */
 
 class Solution {
@@ -15,8 +17,7 @@ public:
     bool exist(vector<vector<char>>& board, string word) {
         for (int i = 0; i < board.size(); i++) {
             for (int j = 0; j < board[0].size(); j++) { //从board的某一个点开始。如果和字符串的第一个字符相等，就开始遍历。
-                auto t = board; //记录原board，每次传入这个。
-                if (DFS(t, i, j, word, 0)) {
+                if (DFS(board, i, j, word, 0)) {
                     return true;
                 }
             }

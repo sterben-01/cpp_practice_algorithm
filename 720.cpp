@@ -1,10 +1,12 @@
 #include <iostream>
+#include <string>
+#include <sstream>
 #include <vector>
 #include <algorithm>
+#include <numeric>
+#include <map>
+#include <unordered_map>
 using namespace std;
-
-//前缀树
-
 #define NODE_NUMBER 26
 class TrieNode{
     public:
@@ -62,7 +64,7 @@ class Trie{
             TrieNode* p = root;
             for(const char item : prifix){
                 p = p->subnode[item - 'a'];
-                if(p == nullptr){
+                if(p == nullptr || p->is_word == false){ //&本题唯一修改的地方是这样。因为题目要求单词必须是逐个字母增加的。翻译过来就是这个路径上，到达每一个节点都要能组成一个节点。
                     break;
                 }
             }
@@ -72,16 +74,33 @@ class Trie{
 
 };
 
+/*
+text 字典树应用入门题目。照着模板复制粘贴。
+&本题唯一修改的地方是search。因为题目要求单词必须是逐个字母增加的。翻译过来就是这个路径上，到达每一个节点都要能组成一个节点。
+举个例子就是
+a ap app appl apple
+这样的话字典树路径a->p->p->l->e每一个节点上 is_word都是true
+但是ban
+b->a->n 只有到了n的时候 is_word才是true
+*/
 
+class Solution {
+public:
+    string longestWord(vector<string>& words) {
+        Trie t;
+        string ret = "";
+        for(int i = 0; i < words.size(); i++){ //把单词塞进去
+            t.insert(words[i]);
+        }
+        for(int i = 0; i < words.size(); i++){
+            if(t.search(words[i]) == true){ //看有没有这个单词。并且满足逐个字母增加的条件
+                if(words[i].size() > ret.size() || (words[i].size() == ret.size() && words[i] < ret)){ //看谁长，一样长按照字典序。
+                    ret = words[i];
+                }
+            }
+        }
+        return ret;
 
-
-
-int main(){
-    Trie t;
-    t.insert("app");
-    t.insert("apple");
-    cout << t.search("apple") << endl;
-    cout << t.search("app") << endl;
-
-    return 0;
-}
+        
+    }
+};
