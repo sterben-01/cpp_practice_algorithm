@@ -9,6 +9,16 @@
 using namespace std;
 
 
+/*
+red:
+    left: {1,2,...}
+    right:{4,5,...}
+blue:
+    left:
+    right:
+*/
+
+
 void process(vector<vector<string>>& input) {
     unordered_map<string, map<string, vector<string>>> my_map;
     vector<vector<string>> ret;
@@ -18,10 +28,10 @@ void process(vector<vector<string>>& input) {
 
     for (auto t = my_map.begin(); t != my_map.end(); t++) {
 
-        if (t->second.size() > 1) {
+        if (t->second.size() > 1) { //必须左右都有过。
             auto firstit = t->second["left"].begin();
             auto secondit = t->second["right"].begin();
-            while (firstit != t->second["left"].end() && secondit != t->second["right"].end()) {
+            while (firstit != t->second["left"].end() && secondit != t->second["right"].end()) { //左右数组同时开始遍历。直到其中一个为空。
                 ret.emplace_back(vector<string>{*firstit, * secondit});
                 firstit++;
                 secondit++;

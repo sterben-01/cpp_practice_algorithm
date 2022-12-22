@@ -59,7 +59,7 @@ public:
             else{
                 return -1;
             }
-            if(c < 0 || r < 0 || o < 0 || a < 0){
+            if(c < 0 || r < 0 || o < 0 || a < 0 || k < 0){
                 return -1;
             }
         }

@@ -68,13 +68,14 @@ class Solution {
 public:
     string fillSingleLine(vector<string>& words, int begin_index, int end_index, int maxWidth, bool lastLine){
         int wordCount = end_index - begin_index +1; //看看这一行应该塞几个单词。+1是因为第3个到第5个是5-3+1 三个单词。
-        int spaceCount = maxWidth - (wordCount - 1); //注释1。
-        for(int i = begin_index; i <= end_index; i++){
+        int spaceCount = maxWidth - (wordCount - 1); //注释1。这一行计算完毕后是用总长度减掉了应该固定分配的每个单词之间的空格。注意此时包括字符。
+        for(int i = begin_index; i <= end_index; i++){ //这一步是去掉上一步计算剩下的所有字符。
             spaceCount -= words[i].size();
         }
         //计算后spaceCount就是额外空格。
         int spaceSuffix = 1; //单词尾部必须有的空格 注释2
-        int spaceAvg = (wordCount == 1) ? 1 : (spaceCount / (wordCount - 1)); //额外空格的平均值。wordCount - 1是因为最后一个单词后无分配位置(空格)。注释3
+        int spaceAvg = (wordCount == 1) ? 0 : (spaceCount / (wordCount - 1)); //额外空格的平均值。wordCount - 1是因为最后一个单词后无分配位置(空格)。注释3
+        //注意这里是只有一个单词时防止除0
         int spaceExtra = (wordCount == 1) ? 0 : (spaceCount % (wordCount - 1)); //额外空格的余数。因为可能额外空格无法平均分布，只能给前几个单词。注释4
         string ans;
         for(int i = begin_index; i < end_index; i++){
@@ -85,7 +86,7 @@ public:
             }
             fill_n(back_inserter(ans), spaceSuffix + spaceAvg + ((i - begin_index) < spaceExtra), ' '); //给每个单词后添加对应数量的空格。注释7
         }
-
+        //如果只有一个单词，则会直接跳入这个地方。
         ans += words[end_index]; //插入每一行最后一个单词。
         fill_n(back_inserter(ans), maxWidth - ans.size(), ' '); //补上每一行最后的空格。注释8
         return ans;

@@ -6,7 +6,6 @@
 #include <future>
 #include <map>
 #include <functional>
-#include <unistd.h>
 #include <unordered_map>
 #include <memory>
 #include <queue>
@@ -20,7 +19,7 @@ text 哈希表是一种思想。不一定非要使用map或者set的方式去重
 9是因为最多9*9
 10是因为数字最多到9，我们为了有下标9，方便计算。
 col_hash[5][3] = 1的意思是 第五列中出现过了3这个数字。
-& 核心其实是把数字下表转换为第几个box转换方式就是 列数/3 + 行数/3*3 比如第三行第九列应该是第六个box。就是9/3 + 3/3*3 = 3+3 = 6
+& 核心其实是把数字下标转换为第几个box转换方式就是 列数/3 + 行数/3*3 比如第三行第九列应该是第六个box。就是9/3 + 3/3*3 = 3+3 = 6
 */
 class Solution {
 public:

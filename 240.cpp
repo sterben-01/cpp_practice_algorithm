@@ -17,20 +17,20 @@ text 和74一模一样。只不过74是从左下角开始，比数字大向右�
 */
 
 
-
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        int i = matrix[0].size()-1;
-        int j = 0;
-        while(i>=0 && j < matrix.size()){
-            if(target > matrix[j][i]){ //!唯一区别，JI反过来。
-                j++;
+        //!唯一区别，JI反过来。
+        int i = 0;
+        int j = matrix[0].size()-1;
+        while(i < matrix.size() && j>=0){
+            if(target > matrix[i][j]){ 
+                i++;
             }
-            else if(target < matrix[j][i]){
-                i--;
+            else if(target < matrix[i][j]){
+                j--;
             }
-            else if (target == matrix[j][i]){
+            else if (target == matrix[i][j]){
                 return true;
             }
         }

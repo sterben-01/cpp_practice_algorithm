@@ -38,7 +38,7 @@ public:
             }
         }
         vector<string> ans;
-        for(auto t:my_map){
+        for(auto& t:my_map){
             ans.emplace_back(to_string(t.second) + " " + t.first); //放到数组就可以了。
         }
         return ans;
