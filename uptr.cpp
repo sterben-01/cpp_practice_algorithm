@@ -56,7 +56,7 @@ namespace area2{
         public:
         T* p_ = nullptr; //T类型指针
         Deleter d_; //删除器
-
+        explicit unique_ptr() = default;
         explicit unique_ptr(T* ptr): p_(ptr){} //构造函数必须为explicit
         unique_ptr(const unique_ptr& ptr) = delete; //删除拷贝构造
         unique_ptr& operator=(const unique_ptr& ptr) = delete; //删除拷贝赋值
@@ -112,9 +112,22 @@ class my_deleter{ //自己的测试删除器。
         }
     }
 };
+
+
+class oneone{
+    public:
+        oneone(){
+            std::cout <<"const" << std::endl;
+        }
+        area2::unique_ptr<oneone> ptr;
+};
+
+
 int main(){
 
-    area2::unique_ptr<myobj, my_deleter<myobj>> ptr(new myobj(20));
+    //area2::unique_ptr<myobj> ptr(new myobj(20));
+    oneone bo;
+    
     //area2::unique_ptr<int, my_deleter<int>> ptr2(new int(30));
     //ptr(std::move(ptr2)); //error
     //area2::unique_ptr<int, my_deleter<int>> ptr(std::move(ptr2));//error

@@ -38,7 +38,7 @@ public:
         int down = area(grid, row + 1, col);
         int left = area(grid, row, col - 1);
         int right = area(grid, row, col + 1);
-        return 1 +left + right + up + down;
+        return 1 +left + right + up + down; //+1是因为到最后的时候，上下左右的统计完毕了，还要加上自己，所以是+1
 
     }
 

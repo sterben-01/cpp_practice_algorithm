@@ -15,25 +15,20 @@
 using namespace std;
 
 //*构造过程的各种测试。
-struct E{
 
-};
 
 class myobj{
     public:
-        myobj(int x = 999):val(new int(x)){ //构造
+        myobj(int x):val(new int(x)){ //构造
             cout <<"const" << endl;
-        }
-        myobj(E e){
-            cout <<"const E" << endl;
-            val = new int(50);
         }
         // int& getval(){
         //     return *val;
         // }
 
-        myobj(const myobj& obj):val(new int(*obj.val)){ //拷贝构造
+        myobj(const myobj& obj){ //拷贝构造
             cout <<"copy const" << endl;
+            val = new int(*obj.val);
         }
         myobj& operator=(const myobj & rhs){ //拷贝赋值
             cout <<"copy= const" << endl;
@@ -48,8 +43,9 @@ class myobj{
         myobj(myobj&& obj){ //移动构造
             cout <<"mv" << endl;
             val = obj.val;
-            obj.val = nullptr;
+            obj.val = new int(3939);
         }
+
         myobj& operator=(myobj&& rhs){ //移动赋值
             cout <<"mv=" << endl;
             if(this == &rhs){
@@ -77,44 +73,39 @@ class myobj{
 
 class testobj{
     public:
-
     myobj inner;
-    testobj(){
-
-    }
+    testobj(myobj&& obj):inner(forward<myobj>(obj)){}
 };
 
+class Person{
+    public:
+    int id;
+    int day;
+    Person(int x, int y): id(x),day(y){}
+};
 
-void func(int* f){
-    cout <<"funccalled" << endl;
-    
-}
 int main(){
-    const int a = 20;
-    auto* f = &a;
-    // myobj b(10);
-    // cout << a.getval() << endl;
-    // myobj c(a);
-    // cout << c.getval() << endl;
-    // myobj d = c;
-    // cout << d.getval() << endl;
-    // d = b;
-    // cout << d.getval() << endl;
-    // myobj e = move(a);
-    // cout << e.getval() << endl;
-    // d = move(b);
-    // cout << d.getval() << endl;
-    // myobj a(5);
-    //myobj b(move(a));
-    // myobj c = move(a);
-    // testobj mine(myobj(200));
-    // cout << *mine.inner.val << endl;
-    // cout << *a.val << endl;
-    // int s = a.getval();
-    // s = 800;
-    // cout << *a.val << endl;
+    int x = 100;
+    auto cmp = [](const Person& a, const Person& b) -> bool {return (a.id < b.id);
+    };
+    set<Person, decltype(cmp)> my_set(cmp); //set的自定义比较。
+    my_set.emplace(3,1);
+    my_set.emplace(1,2);
+    my_set.emplace(2,2);
+    for(auto& i:my_set){
+        cout << i.id << " " << i.day << endl;
+    }
 
 
-    
+
+    vector<Person> my_vec;
+    my_vec.emplace_back(3,1);
+    my_vec.emplace_back(1,2);
+    my_vec.emplace_back(2,2);
+    sort(my_vec.begin(), my_vec.end(), [](const Person& a, const Person& b){return a.id < b.id;}); //sort的自定义排序
+    for(auto& i:my_vec){
+        cout << i.id << " " << i.day << endl;
+    }
     return 0;
+
 }

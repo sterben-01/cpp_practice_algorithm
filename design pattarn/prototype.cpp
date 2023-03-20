@@ -48,6 +48,7 @@ class ConcreteWork: public PrototypeWork{
             copiedWork->workModel->setWorkModelName(modelname);//&作业抄完了，更改作业内容因人而异的部分。
             //return copiedWork;
             return dynamic_pointer_cast<PrototypeWork>(copiedWork); //&智能指针的动态类型转换。
+            //* 我们这里没有调用任何的拷贝构造。我们是直接构造了一个新的ConcreteWork，然后更改其参数后return出去。
         }
 
         void setName(const string& name){
@@ -82,6 +83,9 @@ int main(){
     shared_ptr<PrototypeWork> myWork = make_shared<ConcreteWork>("Sky", 01, "Sky's HW1"); //&我的作业
     cout <<"作业1" << endl;
     shared_ptr<PrototypeWork> hisWork = myWork->clone("Lucy", 831, "Lucy's HW1"); //&有人抄了我的作业
+    //* 我们这里没有调用任何的ConcreteWork的拷贝构造或拷贝赋值。调用的是智能指针的拷贝构造（移动构造）。
+    //* 就算换成了元是指针类型，也没有调用任何拷贝构造
+    //* 除非是引用类型。但是这样是不可能的，因为得弄个右值引用来接，没什么意义。
     cout <<"有人抄作业" << endl;
     cout <<"作业抄完记得更改姓名和学号" <<endl;
 
