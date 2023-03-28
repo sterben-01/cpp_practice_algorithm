@@ -61,7 +61,7 @@ class Lamp{
             current_state = false;
             cout <<"已关闭电灯" <<endl;
         }
-        bool getFanState(){
+        bool getLampState(){
             return current_state;
         }
 
@@ -124,7 +124,7 @@ class LampCommand: public Command{
         
         void execute(){ //具体命令类电灯的执行操作。里面会包含具体的执行命令
         //执行电灯命令
-            if(lamp->getFanState() == true){
+            if(lamp->getLampState() == true){
                 lamp->off();
             }
             else{
